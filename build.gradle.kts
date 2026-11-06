@@ -1,9 +1,10 @@
 plugins {
     kotlin("jvm") version "2.2.20"
+    application
 }
 
 group = "safrolo"
-version = "1.0-SNAPSHOT"
+version = "0.0.1-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -16,6 +17,11 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
 kotlin {
     jvmToolchain(21)
+}
+
+application {
+    mainClass.set("MainKt")
 }
