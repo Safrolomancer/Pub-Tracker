@@ -43,3 +43,21 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+# IntelliJ IDEA local settings
+.idea/
+
+# Environment variables and local configuration
+.env
+.env.*
+!.env.example
+local.properties
+
+# Logs and JVM crash reports
+*.log
+hs_err_pid*
+replay_pid*
+
+# Windows
+Thumbs.db
+Desktop.ini
