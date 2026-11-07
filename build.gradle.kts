@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "safrolo"
-version = "0.0.1"
+version = "0.1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -25,3 +25,8 @@ kotlin {
 application {
     mainClass.set("MainKt")
 }
+
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
+}
+
