@@ -1,9 +1,12 @@
+import com.pubtracker.repository.PubRepository
+import com.pubtracker.service.PubService
+import com.pubtracker.ui.PubConsoleUI
+
 fun main() {
-    println("=== PUB TRACKER ===")
-    println("===== .~~~~.   =====\n" +
-            "===== i====i_  =====\n" +
-            "===== |cccc|_) =====\n" +
-            "===== |cccc|   =====\n" +
-            "===== `-==-'   ====")
-    println("WELCOME TO THE PUB TRACKER!")
+    val repository = PubRepository()
+    val service = PubService(repository)
+    val ui = PubConsoleUI(service)
+
+    ui.start()
 }
+
