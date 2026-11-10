@@ -1,12 +1,15 @@
-
 package com.pubtracker.service
 
 import com.pubtracker.model.Pub
 import com.pubtracker.repository.PubRepository
+import com.pubtracker.repository.VisitRepository
+
 
 class PubService(
-    private val repository: PubRepository
+    private val repository: PubRepository,
+    private val visitRepository: VisitRepository
 ) {
+
 
     fun createPub(
         id: Int,
@@ -56,11 +59,17 @@ class PubService(
         return repository.update(updatedPub)
     }
 
+
     fun deletePub(id: Int): Boolean {
         if (id <= 0) {
             return false
         }
 
+        if (visitRepository.findByPubId(id).isNotEmpty()) {
+            return false
+        }
+
         return repository.delete(id)
     }
+
 }

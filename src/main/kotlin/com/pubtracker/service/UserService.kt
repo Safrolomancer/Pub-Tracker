@@ -1,10 +1,13 @@
+
 package com.pubtracker.service
 
 import com.pubtracker.model.User
 import com.pubtracker.repository.UserRepository
+import com.pubtracker.repository.VisitRepository
 
 class UserService(
-    private val repository: UserRepository
+    private val repository: UserRepository,
+    private val visitRepository: VisitRepository
 ) {
 
     fun createUser(id: Int, name: String): Boolean {
@@ -12,10 +15,7 @@ class UserService(
             return false
         }
 
-        val user = User(
-            id,
-            name.trim()
-        )
+        val user = User(id, name.trim())
 
         return repository.add(user)
     }
@@ -37,16 +37,17 @@ class UserService(
             return false
         }
 
-        val updatedUser = User(
-            id,
-            name.trim()
-        )
+        val updatedUser = User(id, name.trim())
 
         return repository.update(updatedUser)
     }
 
     fun deleteUser(id: Int): Boolean {
         if (id <= 0) {
+            return false
+        }
+
+        if (visitRepository.findByUserId(id).isNotEmpty()) {
             return false
         }
 
