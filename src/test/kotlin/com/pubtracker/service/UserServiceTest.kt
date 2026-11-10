@@ -7,12 +7,13 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
+import com.pubtracker.repository.VisitRepository
 
 class UserServiceTest {
 
     @Test
     fun createUserShouldSaveValidUser() {
-        val service = UserService(UserRepository())
+        val service = UserService(UserRepository(), VisitRepository())
 
         val result = service.createUser(1, "Alice")
 
@@ -25,7 +26,7 @@ class UserServiceTest {
 
     @Test
     fun createUserShouldTrimWhitespace() {
-        val service = UserService(UserRepository())
+        val service = UserService(UserRepository(), VisitRepository())
 
         val result = service.createUser(1, "  Alice  ")
 
@@ -38,7 +39,7 @@ class UserServiceTest {
 
     @Test
     fun createUserShouldRejectBlankName() {
-        val service = UserService(UserRepository())
+        val service = UserService(UserRepository(), VisitRepository())
 
         val result = service.createUser(1, "   ")
 
@@ -48,7 +49,7 @@ class UserServiceTest {
 
     @Test
     fun createUserShouldRejectInvalidIds() {
-        val service = UserService(UserRepository())
+        val service = UserService(UserRepository(), VisitRepository())
 
         assertFalse(service.createUser(0, "Alice"))
         assertFalse(service.createUser(-1, "Alice"))
@@ -58,7 +59,7 @@ class UserServiceTest {
 
     @Test
     fun createUserShouldRejectDuplicateId() {
-        val service = UserService(UserRepository())
+        val service = UserService(UserRepository(), VisitRepository())
 
         service.createUser(1, "Alice")
 
@@ -73,7 +74,7 @@ class UserServiceTest {
 
     @Test
     fun getUserByIdShouldReturnExistingUser() {
-        val service = UserService(UserRepository())
+        val service = UserService(UserRepository(), VisitRepository())
 
         service.createUser(1, "Alice")
 
@@ -85,7 +86,7 @@ class UserServiceTest {
 
     @Test
     fun getUserByIdShouldHandleMissingAndInvalidIds() {
-        val service = UserService(UserRepository())
+        val service = UserService(UserRepository(), VisitRepository())
 
         assertNull(service.getUserById(99))
         assertNull(service.getUserById(0))
@@ -94,7 +95,7 @@ class UserServiceTest {
 
     @Test
     fun getAllUsersShouldReturnSavedUsers() {
-        val service = UserService(UserRepository())
+        val service = UserService(UserRepository(), VisitRepository())
 
         service.createUser(1, "Alice")
         service.createUser(2, "Bob")
@@ -113,7 +114,7 @@ class UserServiceTest {
 
     @Test
     fun updateUserShouldModifyExistingUser() {
-        val service = UserService(UserRepository())
+        val service = UserService(UserRepository(), VisitRepository())
 
         service.createUser(1, "Alice")
 
@@ -128,8 +129,7 @@ class UserServiceTest {
 
     @Test
     fun updateUserShouldRejectInvalidData() {
-        val service = UserService(UserRepository())
-
+        val service = UserService(UserRepository(), VisitRepository())
         service.createUser(1, "Alice")
 
         assertFalse(service.updateUser(0, "Bob"))
@@ -144,7 +144,7 @@ class UserServiceTest {
 
     @Test
     fun updateUserShouldRejectMissingUser() {
-        val service = UserService(UserRepository())
+        val service = UserService(UserRepository(), VisitRepository())
 
         val result = service.updateUser(99, "Bob")
 
@@ -154,7 +154,7 @@ class UserServiceTest {
 
     @Test
     fun deleteUserShouldRemoveExistingUser() {
-        val service = UserService(UserRepository())
+        val service = UserService(UserRepository(), VisitRepository())
 
         service.createUser(1, "Alice")
 
@@ -167,7 +167,7 @@ class UserServiceTest {
 
     @Test
     fun deleteUserShouldRejectInvalidOrMissingIds() {
-        val service = UserService(UserRepository())
+        val service = UserService(UserRepository(), VisitRepository())
 
         assertFalse(service.deleteUser(0))
         assertFalse(service.deleteUser(-1))

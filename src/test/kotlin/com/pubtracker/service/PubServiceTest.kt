@@ -7,12 +7,13 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
+import com.pubtracker.repository.VisitRepository
 
 class PubServiceTest {
 
     @Test
     fun createPubShouldSaveValidPub() {
-        val service = PubService(PubRepository())
+        val service = PubService(PubRepository(), VisitRepository())
 
         val result = service.createPub(
             1,
@@ -29,7 +30,7 @@ class PubServiceTest {
 
     @Test
     fun createPubShouldTrimWhitespace() {
-        val service = PubService(PubRepository())
+        val service = PubService(PubRepository(), VisitRepository())
 
         service.createPub(
             1,
@@ -45,7 +46,7 @@ class PubServiceTest {
 
     @Test
     fun createPubShouldRejectBlankName() {
-        val service = PubService(PubRepository())
+        val service = PubService(PubRepository(), VisitRepository())
 
         val result = service.createPub(
             1,
@@ -59,7 +60,7 @@ class PubServiceTest {
 
     @Test
     fun createPubShouldRejectBlankLocation() {
-        val service = PubService(PubRepository())
+        val service = PubService(PubRepository(), VisitRepository())
 
         val result = service.createPub(
             1,
@@ -73,7 +74,7 @@ class PubServiceTest {
 
     @Test
     fun createPubShouldRejectInvalidIds() {
-        val service = PubService(PubRepository())
+        val service = PubService(PubRepository(), VisitRepository())
 
         assertFalse(
             service.createPub(0, "The Reg", "Waterford")
@@ -88,7 +89,7 @@ class PubServiceTest {
 
     @Test
     fun createPubShouldRejectDuplicateId() {
-        val service = PubService(PubRepository())
+        val service = PubService(PubRepository(), VisitRepository())
 
         service.createPub(1, "The Reg", "Waterford")
 
@@ -107,7 +108,7 @@ class PubServiceTest {
 
     @Test
     fun getPubByIdShouldHandleMissingAndInvalidIds() {
-        val service = PubService(PubRepository())
+        val service = PubService(PubRepository(), VisitRepository())
 
         assertNull(service.getPubById(99))
         assertNull(service.getPubById(0))
@@ -116,7 +117,7 @@ class PubServiceTest {
 
     @Test
     fun getAllPubsShouldReturnSavedPubs() {
-        val service = PubService(PubRepository())
+        val service = PubService(PubRepository(), VisitRepository())
 
         service.createPub(1, "The Reg", "Waterford")
         service.createPub(2, "Geoff's", "Waterford")
@@ -135,7 +136,7 @@ class PubServiceTest {
 
     @Test
     fun updatePubShouldModifyExistingPub() {
-        val service = PubService(PubRepository())
+        val service = PubService(PubRepository(), VisitRepository())
 
         service.createPub(1, "Old Name", "Waterford")
 
@@ -154,7 +155,7 @@ class PubServiceTest {
 
     @Test
     fun updatePubShouldRejectInvalidData() {
-        val service = PubService(PubRepository())
+        val service = PubService(PubRepository(), VisitRepository())
 
         service.createPub(1, "The Reg", "Waterford")
 
@@ -178,7 +179,7 @@ class PubServiceTest {
 
     @Test
     fun updatePubShouldRejectMissingPub() {
-        val service = PubService(PubRepository())
+        val service = PubService(PubRepository(), VisitRepository())
 
         val result = service.updatePub(
             99,
@@ -192,7 +193,7 @@ class PubServiceTest {
 
     @Test
     fun deletePubShouldRemoveExistingPub() {
-        val service = PubService(PubRepository())
+        val service = PubService(PubRepository(), VisitRepository())
 
         service.createPub(1, "The Reg", "Waterford")
 
@@ -205,7 +206,7 @@ class PubServiceTest {
 
     @Test
     fun deletePubShouldRejectInvalidOrMissingIds() {
-        val service = PubService(PubRepository())
+        val service = PubService(PubRepository(), VisitRepository())
 
         assertFalse(service.deletePub(0))
         assertFalse(service.deletePub(-1))
